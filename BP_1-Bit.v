@@ -35,10 +35,16 @@ module BP_1Bit(
     end
     always @ (posedge clk)
     begin
-        
+        if(present_state == s2)
+            predict = 0;
+        else
+            predict = 1;
     end
     always @ (posedge clk, posedge rst)
     begin
-        
+        if (rst == 1'b1)
+            present_state = s1;
+        else
+            present_state = next_state;
     end
 endmodule

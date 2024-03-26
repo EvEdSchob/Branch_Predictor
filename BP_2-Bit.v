@@ -56,7 +56,7 @@ module BP_2Bit(
         else if (present_state == s2)
             predict = 1;
         else
-            predict = 0; 
+            predict = 1; 
     end
     
     always @ (posedge clk, posedge rst)
