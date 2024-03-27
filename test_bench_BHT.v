@@ -54,17 +54,17 @@ module BHT_testbench();
             
             $display("Read PC: %d, Taken: %d", pc, taken); // Debugging output
             
-            // Wait for the next clock cycle to ensure the inputs are properly sampled
+            
             @(posedge clk);
             
-            // Wait for the prediction to be stable (next cycle after taken is applied)
+           
             @(posedge clk);
             total_predictions = total_predictions + 1;
             if (prediction === taken) begin
                 correct_predictions = correct_predictions + 1;
             end
             
-            // Additional delay to observe changes, if necessary
+            
             #10;
         end
         
