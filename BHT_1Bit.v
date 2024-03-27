@@ -10,7 +10,7 @@ module BHT(
     output reg [31:0] correct_predictions = 0 // Counts correct predictions
 );
     parameter M = 0; // Number of entries in the BHT
-    parameter N = 0;  // Number of bits per entry
+    parameter N = 1;  // Number of bits per entry
 
     // Local parameters for addressing
     localparam ADDR_BITS = $clog2(M);
@@ -51,19 +51,19 @@ module BHT(
     assign prediction = predictions[index];
 
     // Count total and correct predictions
-    always @(posedge clk) begin
-        if (!reset) begin
-            total_predictions <= total_predictions + 1; // Increment total predictions every cycle
+//    always @(posedge clk) begin
+//        if (!reset) begin
+//            total_predictions <= total_predictions + 1; // Increment total predictions every cycle
 
-            // Compare the selected prediction to the actual outcome and update correct_predictions
-            if (prediction == taken) begin
-                correct_predictions <= correct_predictions + 1;
-            end
-        end else begin
-            // Reset the counters on reset signal
-            total_predictions <= 0;
-            correct_predictions <= 0;
-        end
-    end
+//            // Compare the selected prediction to the actual outcome and update correct_predictions
+//            if (prediction == taken) begin
+//                correct_predictions <= correct_predictions + 1;
+//            end
+//        end else begin
+//            // Reset the counters on reset signal
+//            total_predictions <= 0;
+//            correct_predictions <= 0;
+//        end
+//    end
 
 endmodule
