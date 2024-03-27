@@ -10,12 +10,12 @@ module BHT_testbench();
     integer file, r;
     integer total_predictions = 0;
     integer correct_predictions = 0;
-    
+
     // Instantiate the BHT module
     BHT #(
-        .M(64), // Adjust M as necessary
-        .N(2)   // Using 2-bit predictors for this example
-    ) bht_instance (
+        .M(16), 
+        .N(1)   
+    ) bht_test_bench (
         .clk(clk),
         .reset(reset),
         .pc(pc),
@@ -60,19 +60,18 @@ module BHT_testbench();
                 $finish;
             end
             
-            // Use the least significant 9 bits for the simulation
+            // Least significant 9 bits for the simulation
             pc = pc_temp[8:0];
             $display("Read PC: %x (9 bits: %b), Taken: %b", pc_temp, pc, taken); // Debugging output
             
-            // Apply the test case and check the prediction
+            
             @(posedge clk);
             @(posedge clk);
             total_predictions = total_predictions + 1;
             if (prediction === taken) begin
                 correct_predictions = correct_predictions + 1;
             end
-            
-            // Optional: delay for observing the simulation, if needed
+           
             #10;
         end
         

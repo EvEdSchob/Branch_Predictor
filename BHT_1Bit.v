@@ -8,8 +8,8 @@ module BHT(
     output wire prediction
  
 );
-    parameter M = 64; // Number of entries in the BHT
-    parameter N = 1;  // Number of bits per entry
+    parameter M = 64; // Change in TB
+    parameter N = 2;  // change in TB
 
     // Local parameters for addressing
     localparam ADDR_BITS = $clog2(M);
@@ -20,6 +20,7 @@ module BHT(
     // Prediction output wire for each predictor instance
     wire [M-1:0] predictions;
 
+    // Generate function to connect the right module referring to the selection N
     generate
         if (N == 1) begin
             // Instantiate M 1-bit predictors
@@ -32,7 +33,8 @@ module BHT(
                     .predict(predictions[i])
                 );
             end
-        end else if (N == 2) begin
+        end 
+        else if (N == 2) begin
             // Instantiate M 2-bit predictors
             genvar i;
             for (i = 0; i < M; i = i + 1) begin : gen_bp_2bit
