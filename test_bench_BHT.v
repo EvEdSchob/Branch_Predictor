@@ -3,7 +3,8 @@
 module BHT_testbench();
 
     reg clk, reset;
-    reg [8:0] pc;
+    reg [9:0] pc_temp; // Temporary 10-bit register to read the full PC value
+    reg [8:0] pc; // 9-bit PC for the simulation
     reg taken;
     wire prediction;
     integer file, r;
@@ -12,7 +13,7 @@ module BHT_testbench();
     
     // Instantiate the BHT module
     BHT #(
-        .M(16), // Adjust M as necessary
+        .M(64), // Adjust M as necessary
         .N(2)   // Using 2-bit predictors for this example
     ) bht_instance (
         .clk(clk),
@@ -44,27 +45,34 @@ module BHT_testbench();
         
         // Read from the file and apply each test case
         while (!$feof(file)) begin
-            r = $fscanf(file, "%d\n%d\n", pc, taken);
-            if (r != 2) begin
-                $display("Warning: Unexpected end of file or format error.");
-                // Close the file and end the simulation if format is not as expected
+            // Read the PC value as hexadecimal
+            r = $fscanf(file, "%x\n", pc_temp);
+            if (r != 1) begin
+                $display("Failed to read a PC value. Terminating simulation.");
+                $fclose(file);
+                $finish;
+            end
+            // Read the taken flag
+            r = $fscanf(file, "%d\n", taken);
+            if (r != 1) begin
+                $display("Failed to read a taken flag. Terminating simulation.");
                 $fclose(file);
                 $finish;
             end
             
-            $display("Read PC: %d, Taken: %d", pc, taken); // Debugging output
+            // Use the least significant 9 bits for the simulation
+            pc = pc_temp[8:0];
+            $display("Read PC: %x (9 bits: %b), Taken: %b", pc_temp, pc, taken); // Debugging output
             
-            
+            // Apply the test case and check the prediction
             @(posedge clk);
-            
-           
             @(posedge clk);
             total_predictions = total_predictions + 1;
             if (prediction === taken) begin
                 correct_predictions = correct_predictions + 1;
             end
             
-            
+            // Optional: delay for observing the simulation, if needed
             #10;
         end
         

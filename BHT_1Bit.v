@@ -5,11 +5,10 @@ module BHT(
     input wire reset,
     input wire [8:0] pc,  
     input wire taken,
-    output wire prediction,
-    output reg [31:0] total_predictions = 0, // Counts total predictions
-    output reg [31:0] correct_predictions = 0 // Counts correct predictions
+    output wire prediction
+ 
 );
-    parameter M = 0; // Number of entries in the BHT
+    parameter M = 64; // Number of entries in the BHT
     parameter N = 1;  // Number of bits per entry
 
     // Local parameters for addressing
@@ -50,20 +49,5 @@ module BHT(
     // Select the prediction based on the indexed predictor
     assign prediction = predictions[index];
 
-    // Count total and correct predictions
-//    always @(posedge clk) begin
-//        if (!reset) begin
-//            total_predictions <= total_predictions + 1; // Increment total predictions every cycle
-
-//            // Compare the selected prediction to the actual outcome and update correct_predictions
-//            if (prediction == taken) begin
-//                correct_predictions <= correct_predictions + 1;
-//            end
-//        end else begin
-//            // Reset the counters on reset signal
-//            total_predictions <= 0;
-//            correct_predictions <= 0;
-//        end
-//    end
 
 endmodule
