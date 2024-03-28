@@ -10,7 +10,7 @@ module BHT_testbench();
     integer file, r;
     integer total_predictions = 0;
     integer correct_predictions = 0;
-    localparam M = 32; 
+    localparam M = 64; 
     localparam N = 2;
 
     // Instantiate the BHT module
