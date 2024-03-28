@@ -15,37 +15,37 @@ module BP_2Bit(
     
     always @(present_state, result)
     begin
-            case(present_state)
-            s1: //Strongly taken
-            begin
-                if(result)
-                    next_state = s1; //Stay in state 1 (Strongly Taken)
-                else
-                    next_state = s2; //Move to state 2 (Weakly Taken)
-            end
-            s2: //Weakly taken
-            begin
-                if(result)
-                    next_state = s1; //Move to state 1 (Strongly Taken)
-                else
-                    next_state = s3; //Move to state 3 (Weakly Not Taken)
-            end
-            s3: //Weakly not taken
-            begin
-                if(result)
-                    next_state = s2; //Move to state 2 (Weakly Taken)
-                else
-                    next_state = s4; //Move to state 4 (Strongly Not Taken) 
-            end
-            s4: //Strongly not taken
-            begin
-                if(result)
-                    next_state = s4; //Stay in state 4 (Strongly Not Taken)
-                else
-                    next_state = s3; //Move to state 3 (Weakly Not Taken)
-            end
-            default: next_state = s1;
-            endcase     
+        case(present_state)
+        s1: //Strongly taken
+        begin
+            if(result)
+                next_state = s1; //Stay in state 1 (Strongly Taken)
+            else
+                next_state = s2; //Move to state 2 (Weakly Taken)
+        end
+        s2: //Weakly taken
+        begin
+            if(result)
+                next_state = s1; //Move to state 1 (Strongly Taken)
+            else
+                next_state = s3; //Move to state 3 (Weakly Not Taken)
+        end
+        s3: //Weakly not taken
+        begin
+            if(result)
+                next_state = s2; //Move to state 2 (Weakly Taken)
+            else
+                next_state = s4; //Move to state 4 (Strongly Not Taken) 
+        end
+        s4: //Strongly not taken
+        begin
+            if(result)
+                next_state = s4; //Stay in state 4 (Strongly Not Taken)
+            else
+                next_state = s3; //Move to state 3 (Weakly Not Taken)
+        end
+        default: next_state = s1;
+        endcase     
     end
     always @ (posedge clk)
     begin
