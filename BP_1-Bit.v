@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module BP_1Bit(
-    input wire clk, rst,
+    input wire clk, rst, en,
     input wire result, //Taken = 1, Not Taken = 0
     output reg predict //Taken = 1, Not Taken = 0
     );
@@ -44,7 +44,7 @@ module BP_1Bit(
     begin
         if (rst == 1'b1)
             present_state = s1;
-        else
+        else if(en == 1'b1) 
             present_state = next_state;
     end
 endmodule
