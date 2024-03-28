@@ -15,7 +15,6 @@ module BP_2Bit(
     
     always @(present_state, result)
     begin
-        if(en) begin
             case(present_state)
             s1: //Strongly taken
             begin
@@ -47,7 +46,6 @@ module BP_2Bit(
             end
             default: next_state = s1;
             endcase     
-        end
     end
     always @ (posedge clk)
     begin
@@ -65,7 +63,7 @@ module BP_2Bit(
     begin
         if (rst == 1'b1)
             present_state = s1;
-        else
+        else if(en == 1'b1)
             present_state = next_state;
     end
 endmodule

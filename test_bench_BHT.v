@@ -10,17 +10,20 @@ module BHT_testbench();
     integer file, r;
     integer total_predictions = 0;
     integer correct_predictions = 0;
+    localparam M = 32; 
+    localparam N = 2;
 
     // Instantiate the BHT module
     BHT #(
-        .M(16), 
-        .N(1)   
+        .M(M), 
+        .N(N)   
     ) bht_test_bench (
         .clk(clk),
         .reset(reset),
         .pc(pc),
         .taken(taken),
         .prediction(prediction)
+        
     );
     
     // Generate clock
@@ -65,14 +68,13 @@ module BHT_testbench();
             $display("Read PC: %x (9 bits: %b), Taken: %b", pc_temp, pc, taken); // Debugging output
             
             
-            @(posedge clk);
+           // @(posedge clk);
             @(posedge clk);
             total_predictions = total_predictions + 1;
-            if (prediction === taken) begin
+            if (prediction == taken) begin
                 correct_predictions = correct_predictions + 1;
             end
            
-            #10;
         end
         
         // Simulation and file closure
