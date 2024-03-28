@@ -39,7 +39,8 @@ wire [M-1:0] predictions;
         .clk(clk),
         .rst(reset),
         .result(taken),
-        .predict(predictions[index])
+        .predict(predictions[M-1:0]),
+        .en(EN_Vec[M-1:0])
     );
 end else if (N == 2) begin
     BP_2Bit bp2_M_instances[M-1:0] (

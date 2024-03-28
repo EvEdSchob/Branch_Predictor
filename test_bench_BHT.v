@@ -10,8 +10,8 @@ module BHT_testbench();
     integer file, r;
     integer total_predictions = 0;
     integer correct_predictions = 0;
-    localparam M = 64; 
-    localparam N = 2;
+    localparam M = 64; // update values as needed
+    localparam N = 1; // update values as needed
 
     // Instantiate the BHT module
     BHT #(
@@ -68,7 +68,6 @@ module BHT_testbench();
             $display("Read PC: %x (9 bits: %b), Taken: %b", pc_temp, pc, taken); // Debugging output
             
             
-           // @(posedge clk);
             @(posedge clk);
             total_predictions = total_predictions + 1;
             if (prediction == taken) begin
